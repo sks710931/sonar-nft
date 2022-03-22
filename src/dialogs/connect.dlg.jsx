@@ -24,9 +24,14 @@ export const WalletConnection = (props) => {
   const handleClose = () => {
     onClose();
   };
-  const {activate, error} = useWeb3React();
+  const {activate, error, account} = useWeb3React();
   const handleMetamask = () => {
     activateInjectedProvider("MetaMask");
+    activate(injectedConnector);
+    onClose(true);
+  }
+  const handleTrust = () => {
+    activateInjectedProvider("TrustWallet");
     activate(injectedConnector);
     onClose(true);
   }
@@ -39,8 +44,8 @@ export const WalletConnection = (props) => {
 
   useEffect(() => {
     
-    console.log(error)
-  }, [error]);
+    console.log(account)
+  }, [error, account]);
   return (
     <Dialog
       open={open}
@@ -66,7 +71,7 @@ export const WalletConnection = (props) => {
                 </div>
                 <span className={classes.name}>WalletConnect</span>
             </div>
-            <div className={classes.item}>
+            <div onClick={handleTrust} className={classes.item}>
                 <div className={classes.icon}>
                     <img width={24} height={24} src={TWT} style={{marginRight:15}} alt="" />
                 </div>

@@ -17,6 +17,7 @@ export function activateInjectedProvider(providerName) {
   switch (providerName) {
       case 'TrustWallet':
           provider = ethereum.providers.find(({ isTrustWallet}) => isTrustWallet);
+          console.log(provider)
           break;
       case 'MetaMask':
           provider = ethereum.providers.find(({ isMetaMask }) => isMetaMask);
