@@ -4,12 +4,15 @@ import {
   Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React from "react";
+import React, {useEffect} from "react";
 import Slide from "@mui/material/Slide";
 import metamask from "../assets/images/metamask.svg";
 import TWT from "../assets/images/TWT.svg";
 import wc from "../assets/images/walletconnect.svg";
 import walletImg from "../assets/images/sonarwallet.png";
+import { activateInjectedProvider, injectedConnector } from "../connectors/injected-connector";
+import { useWeb3React } from "@web3-react/core";
+import { walletConnect } from "../connectors/wallet-connect";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -21,7 +24,23 @@ export const WalletConnection = (props) => {
   const handleClose = () => {
     onClose();
   };
+  const {activate, error} = useWeb3React();
+  const handleMetamask = () => {
+    activateInjectedProvider("MetaMask");
+    activate(injectedConnector);
+    onClose(true);
+  }
+
+  const handleWalletConnect = async () => {
+    await activate(walletConnect);
+    onClose(true);
+  }
   const classes = useStyles();
+
+  useEffect(() => {
+    
+    console.log(error)
+  }, [error]);
   return (
     <Dialog
       open={open}
@@ -35,13 +54,13 @@ export const WalletConnection = (props) => {
       </DialogTitle>
       <div className={classes.main}>
           <Typography className={classes.desc}>Please connect your wallet</Typography>
-            <div className={classes.item}>
+            <div onClick={handleMetamask} className={classes.item}>
                 <div className={classes.icon}>
                     <img width={24} height={24} src={metamask} style={{marginRight:15}} alt="" />
                 </div>
                 <span className={classes.name}>Metamask</span>
             </div>
-            <div className={classes.item}>
+            <div onClick={handleWalletConnect} className={classes.item}>
                 <div className={classes.icon}>
                     <img width={24} height={24} src={wc} style={{marginRight:15}} alt="" />
                 </div>
