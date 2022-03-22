@@ -1,10 +1,7 @@
 import {
   Dialog,
   DialogTitle,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
+  Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
@@ -12,7 +9,8 @@ import Slide from "@mui/material/Slide";
 import metamask from "../assets/images/metamask.svg";
 import TWT from "../assets/images/TWT.svg";
 import wc from "../assets/images/walletconnect.svg";
-import CloseIcon from '@mui/icons-material/Close';
+import walletImg from "../assets/images/sonarwallet.png";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -30,37 +28,31 @@ export const WalletConnection = (props) => {
       onClose={handleClose}
       TransitionComponent={Transition}
       maxWidth="sm"
-      fullWidth
+      className={classes.dlg}
     >
       <DialogTitle className={classes.title}>
-        <IconButton onClick={handleClose}>
-            <CloseIcon />
-        </IconButton>
+        <img width={50} src={walletImg} alt="" />
       </DialogTitle>
       <div className={classes.main}>
-        <List>
-          <ListItem className={classes.item} button key="metamask">
-            <div className={classes.walletItem}>
-              <ListItemAvatar className={classes.avatar}>
-                <img className={classes.icon} src={metamask} alt="" />
-              </ListItemAvatar>
+          <Typography className={classes.desc}>Please connect your wallet</Typography>
+            <div className={classes.item}>
+                <div className={classes.icon}>
+                    <img width={24} height={24} src={metamask} style={{marginRight:15}} alt="" />
+                </div>
+                <span className={classes.name}>Metamask</span>
             </div>
-          </ListItem>
-          <ListItem className={classes.item} button key="trustwallet">
-            <div className={classes.walletItem}>
-              <ListItemAvatar className={classes.avatar}>
-                <img className={classes.icon} src={TWT} alt="" />
-              </ListItemAvatar>
+            <div className={classes.item}>
+                <div className={classes.icon}>
+                    <img width={24} height={24} src={wc} style={{marginRight:15}} alt="" />
+                </div>
+                <span className={classes.name}>WalletConnect</span>
             </div>
-          </ListItem>
-          <ListItem className={classes.item} button key="wallet_connect">
-            <div className={classes.walletItem}>
-              <ListItemAvatar className={classes.avatar}>
-                <img className={classes.icon} src={wc} alt="" />
-              </ListItemAvatar>
+            <div className={classes.item}>
+                <div className={classes.icon}>
+                    <img width={24} height={24} src={TWT} style={{marginRight:15}} alt="" />
+                </div>
+                <span className={classes.name}>Trust Wallet</span>
             </div>
-          </ListItem>
-        </List>
       </div>
     </Dialog>
   );
@@ -69,39 +61,45 @@ const useStyles = makeStyles((theme) => ({
   main: {
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 60,
+    paddingBottom: 20,
+    textAlign: "center",
+    paddingLeft: 30,
+    paddingRight: 30
   },
-  item: {
-    display: "flex",
-    justifyContent: "center !important",
-    alignItems: "center !important",
+  dlg:{
+      "& .MuiDialog-paper":{
+        borderRadius: "27px !important"
+      }
+      
   },
-  avatar: {
-    display: "flex",
-    justifyContent: "center !important",
-    alignItems: "center !important",
+  desc:{
+      fontSize: "18px !important",
+      fontWeight: "600 !important",
+      marginBottom: `15px !important`
   },
-  text: {
-    width: 200,
-    "& span": {
-      fontSize: `22px !important`,
-      fontWeight: 500,
-      color: "graytext",
-    },
+  item:{
+      display:"flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      padding: "13px 18px",
+      border: "1px solid rgba(151, 151, 151, 0.31)",
+      borderRadius: 17,
+      marginBottom: 8,
+      "&:hover":{
+        border: "1px solid rgba(151, 151, 151, 0.81)",
+        cursor: "pointer"
+      }
   },
-  walletItem: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+  name:{
+    fontSize: 19,
+    lineHeight: `27px`
   },
-  icon: {
-    height: 50,
-  },
+  
   title:{
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
   }
 }));
