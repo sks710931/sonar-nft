@@ -1,18 +1,27 @@
 /* eslint-disable no-useless-computed-key */
 import { Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React from "react";
+import React, {useState} from "react";
+import { WalletConnection } from "../dialogs/connect.dlg";
 
 export const Minter = () => {
+  const [isWalletConnectOpen, setWalletConnectOpen] = useState(false);
   const classes = useStyles();
+  const handleConnect = () => {
+      setWalletConnectOpen(true);
+  }
+  const handleConnectClose = () => {
+    setWalletConnectOpen(false);
+  }
   return (
     <div className={classes.container}>
-      <Button variant="contained" className={classes.connectBtn}>
+      <Button variant="contained" onClick={handleConnect} className={classes.connectBtn}>
         Connect Wallet
       </Button>
       <Button variant="contained" className={classes.mintBtn}>
         Mint 0/250
       </Button>
+      <WalletConnection open={isWalletConnectOpen} onClose={handleConnectClose} />
     </div>
   );
 };

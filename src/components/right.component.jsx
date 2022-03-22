@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    textAlign: "justify",
     textJustify: "inter-word",
     "& p": {
       color: "white",
